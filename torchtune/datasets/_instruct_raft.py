@@ -15,7 +15,7 @@ from torchtune.data import (
     Message,
     validate_messages,
 )
-from torchtune.datasets._utils import load_deep_lake_dataset
+from torchtune.datasets._utils import load_deeplake_dataset
 
 from torchtune.modules.tokenizers import Tokenizer
 
@@ -49,7 +49,7 @@ class InstructDatasetDeepLakeRAFT(Dataset):
         max_seq_len (Optional[int]): Maximum number of tokens in the returned input and label token id lists.
             Default is None, disabling truncation. We recommend setting this to the highest you can fit in memory
             and is supported by the model. For example, llama2-7B supports up to 4096 for sequence length.
-        **load_dataset_kwargs (Dict[str, Any]): additional keyword arguments to pass to `load_deep_lake_dataset`.
+        **load_dataset_kwargs (Dict[str, Any]): additional keyword arguments to pass to `load_deeplake_dataset`.
     """
 
     def __init__(
@@ -63,7 +63,7 @@ class InstructDatasetDeepLakeRAFT(Dataset):
         **load_dataset_kwargs: Dict[str, Any],
     ) -> None:
         self._tokenizer = tokenizer
-        self._data = load_deep_lake_dataset(source, **load_dataset_kwargs)
+        self._data = load_deeplake_dataset(source, **load_dataset_kwargs)
         self.template = template
         self._transform = transform
         self._column_map = column_map
@@ -126,7 +126,7 @@ def instruct_dataset_raft(
         max_seq_len (Optional[int]): Maximum number of tokens in the returned input and label token id lists.
             Default is None, disabling truncation. We recommend setting this to the highest you can fit in memory
             and is supported by the model. For example, llama2-7B supports up to 4096 for sequence length.
-        **load_dataset_kwargs (Dict[str, Any]): additional keyword arguments to pass to `load_deep_lake_dataset`.
+        **load_dataset_kwargs (Dict[str, Any]): additional keyword arguments to pass to `load_deeplake_dataset`.
 
     Returns:
         InstructDataset: the configured InstructDataset

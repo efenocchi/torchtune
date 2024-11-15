@@ -28,13 +28,13 @@ model:
 # Tokenizer
 tokenizer:
   _component_: torchtune.models.llama3.llama3_tokenizer
-  path: llama3_instruct/original/tokenizer.model
+  path: llama3/original/tokenizer.model
 
 checkpointer:
   _component_: torchtune.utils.FullModelMetaCheckpointer
-  checkpoint_dir: llama3_instruct/original/
+  checkpoint_dir: llama3/original/
   checkpoint_files: [
-    meta_model_0.pt
+    consolidated.00.pth
   ]
   recipe_checkpoint: null
   output_dir: /tmp/Meta-Llama-3-8B_other/

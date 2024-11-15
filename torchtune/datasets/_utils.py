@@ -51,18 +51,28 @@ class DeepLakeDataloader(Dataset):
         return len(self.ds)
 
     def __getitem__(self, idx):
-        column_map = self.ds.tensors.keys()
-
         values_dataset = {}
-        for el in column_map:  # {"column_name" : value}
-            values_dataset[el] = self.ds[el][idx].text().astype(str)
+
+        # deeplake v4
+        try:
+            schema = self.ds.schema
+            for el in schema.columns:
+                column_name = el.name
+                values_dataset[column_name] = self.ds[column_name][idx]
+        except Exception as e:
+            # deeplake v3
+            try:
+                column_map = self.ds.tensors.keys()
+
+                for el in column_map:  # {"column_name" : value}
+                    values_dataset[el] = self.ds[el][idx].text().astype(str)
+            except Exception as e:
+                raise e
 
         return values_dataset
 
 
-def load_deep_lake_dataset(
-    deep_lake_dataset: str, **config_kwargs
-) -> DeepLakeDataloader:
+def load_deeplake_dataset(deeplake_dataset: str, **config_kwargs) -> DeepLakeDataloader:
     """
     Load a dataset from ActiveLoop's DeepLake platform.
 
@@ -73,6 +83,14 @@ def load_deep_lake_dataset(
     Returns:
         DeepLakeDataloader: A data loader for the loaded dataset.
     """
-    ds = deeplake.dataset(deep_lake_dataset, **config_kwargs)
+    try:
+        ds = deeplake.open_read_only(deeplake_dataset, **config_kwargs)
+    except Exception as e:
+
+        try:
+            ds = deeplake.query(f'select * from "{deeplake_dataset}" ')
+        except Exception:
+            raise e
+
     log.info(f"Dataset loaded from deeplake: {ds}")
     return DeepLakeDataloader(ds)

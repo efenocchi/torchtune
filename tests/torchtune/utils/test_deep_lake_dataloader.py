@@ -7,7 +7,7 @@
 from unittest.mock import patch
 
 import deeplake
-from torchtune.datasets import DeepLakeDataloader, load_deep_lake_dataset
+from torchtune.datasets import DeepLakeDataloader, load_deeplake_dataset
 
 
 class TestDeepLakeDataloader:
@@ -56,10 +56,10 @@ class TestDeepLakeDataloader:
         assert dl[1] == {"id": "id2", "type": "type2"}
 
 
-def test_load_deep_lake_dataset():
+def test_load_deeplake_dataset():
     with patch("deeplake.dataset") as mock_dataset:
         fake_ds = deeplake.dataset()
         mock_dataset.return_value = fake_ds
-        dl = load_deep_lake_dataset("test", overwrite=True)
+        dl = load_deeplake_dataset("test", overwrite=True)
         assert isinstance(dl, DeepLakeDataloader)
         assert dl.ds == fake_ds

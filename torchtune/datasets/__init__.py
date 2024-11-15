@@ -17,7 +17,7 @@ from torchtune.datasets._raft import raft_dataset
 from torchtune.datasets._samsum import samsum_dataset
 from torchtune.datasets._slimorca import slimorca_dataset
 from torchtune.datasets._stack_exchanged_paired import stack_exchanged_paired_dataset
-from torchtune.datasets._utils import DeepLakeDataloader, load_deep_lake_dataset
+from torchtune.datasets._utils import DeepLakeDataloader, load_deeplake_dataset
 
 __all__ = [
     "alpaca_dataset",
@@ -34,6 +34,6 @@ __all__ = [
     "instruct_dataset_raft",
     "chat_dataset",
     "DeepLakeDataloader",
-    "load_deep_lake_dataset",
+    "load_deeplake_dataset",
     "ConcatDataset",
 ]

@@ -21,14 +21,14 @@ class TestRAFTDataset:
         # spm.SentencePieceTrainer.train('--input=<TRAIN_FILE> --model_prefix=m --vocab_size=2000')
         return SentencePieceTokenizer(str(get_assets_path() / "m.model"))
 
-    @patch("torchtune.datasets._instruct_raft.load_deep_lake_dataset")
-    def test_label_no_masking(self, load_deep_lake_dataset, tokenizer):
+    @patch("torchtune.datasets._instruct_raft.load_deeplake_dataset")
+    def test_label_no_masking(self, load_deeplake_dataset, tokenizer):
         """
         Test whether the input and the labels are correctly created when the input is not masked.
         """
 
         # mock the call to Deep Lake Datasets
-        load_deep_lake_dataset.return_value = [
+        load_deeplake_dataset.return_value = [
             {
                 "instruction": """<DOCUMENT> Artificial Intelligence (AI) is revolutionizing industries worldwide,
                 from healthcare to finance.By analyzing vast amounts of data, AI algorithms can detect patterns and
