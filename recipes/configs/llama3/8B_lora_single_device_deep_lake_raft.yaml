@@ -37,7 +37,7 @@ checkpointer:
     consolidated.00.pth
   ]
   recipe_checkpoint: null
-  output_dir: /tmp/Meta-Llama-3-8B_other/
+  output_dir: /tmp/Meta-Llama-3-8B/
   model_type: LLAMA3
 resume_from_checkpoint: False
 
